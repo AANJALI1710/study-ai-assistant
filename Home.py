@@ -1,6 +1,5 @@
 import streamlit as st
 import PyPDF2
-import os
 
 # Page Config
 st.set_page_config(page_title="StudyBuddy Home", page_icon="🏠", layout="wide")
@@ -24,11 +23,15 @@ def get_pdf_text(pdf_file):
 uploaded_file = st.file_uploader("📂 Upload PDF Notes", type="pdf")
 
 if uploaded_file:
-    # Process only if new file
     with st.spinner("Analyzing document..."):
         text = get_pdf_text(uploaded_file)
-        st.session_state.pdf_text = text  # Save to "Global" memory
+        st.session_state.pdf_text = text
         st.success("✅ Notes Processed! Select a tool from the sidebar to start.")
         st.balloons()
 else:
     st.info("👈 Waiting for file...")
+
+# --- OPTIONAL: SIDEBAR INSTRUCTIONS ---
+with st.sidebar:
+    st.markdown("### 🤖 Powered by Gemini 1.5")
+    st.info("Upload a PDF to enable Chat, Flashcards, and Quizzes.")
