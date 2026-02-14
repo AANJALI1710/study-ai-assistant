@@ -1,6 +1,8 @@
 # Study AI Assistant 🎓
 
 An AI-powered application to help students study smarter. Upload your PDF notes and get instant access to a chatbot, flashcards, and quizzes.
+## 🔗 Live Demo
+**Access the application here:** [https://study-ai-assistant.streamlit.app/](https://study-ai-assistant.streamlit.app/)
 
 ## Features
 
