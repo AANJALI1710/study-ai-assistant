@@ -5,36 +5,15 @@ import json
 
 st.set_page_config(page_title="Quiz Master", page_icon="❓", layout="wide")
 
-# --- CUSTOM CSS ---
-st.markdown("""
-    <style>
-    .question-card {
-        background-color: #262730;
-        padding: 20px;
-        border-radius: 15px;
-        border: 1px solid #4B4B4B;
-        margin-bottom: 20px;
-    }
-    .question-text {
-        font-size: 18px;
-        font-weight: bold;
-        color: #FAFAFA;
-        margin-bottom: 10px;
-    }
-    .success-box {
-        padding: 10px;
-        background-color: rgba(0, 255, 0, 0.1);
-        border-left: 5px solid #00FF00;
-        border-radius: 5px;
-    }
-    .error-box {
-        padding: 10px;
-        background-color: rgba(255, 0, 0, 0.1);
-        border-left: 5px solid #FF0000;
-        border-radius: 5px;
-    }
-    </style>
-""", unsafe_allow_html=True)
+import styles
+import sys
+
+# Ensure we can import styles if it's in the parent directory
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import styles
+current_theme = styles.display_theme_toggle()
+styles.apply_custom_styles(current_theme)
+
 
 # --- 1. SETUP GROQ CLIENT ---
 try:
@@ -116,10 +95,12 @@ if "quiz_generated" in st.session_state:
     
     for i, q in enumerate(st.session_state.quiz_data):
         st.markdown(f"""
-        <div class="question-card">
-            <div class="question-text">Q{i+1}: {q['q']}</div>
+        <div class="custom-card">
+            <h4 style="color: #4f46e5;">Question {i+1}</h4>
+            <p style="font-size: 1.1rem; font-weight: 500;">{q['q']}</p>
         </div>
         """, unsafe_allow_html=True)
+
         
         choice = st.radio(f"Select answer for Q{i+1}:", q["options"], key=f"q_{i}", index=None, label_visibility="collapsed")
         
@@ -137,6 +118,5 @@ if "quiz_generated" in st.session_state:
     if st.button("🏁 Check Final Score"):
         if score == total:
             st.success(f"🎉 Perfect Score! {score}/{total}")
-            st.balloons()
         else:
             st.info(f"You got {score}/{total} correct.")

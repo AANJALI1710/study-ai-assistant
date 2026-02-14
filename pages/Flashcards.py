@@ -4,7 +4,17 @@ import json
 import pandas as pd
 import os
 
-st.set_page_config(page_title="Flashcards", page_icon="⚡")
+st.set_page_config(page_title="Flashcards", page_icon="⚡", layout="wide")
+
+import styles
+import sys
+import os
+
+# Ensure we can import styles if it's in the parent directory
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import styles
+current_theme = styles.display_theme_toggle()
+styles.apply_custom_styles(current_theme)
 
 # --- 1. SETUP GROQ ---
 try:
@@ -19,6 +29,7 @@ if "pdf_text" not in st.session_state:
     st.stop()
 
 st.title("⚡ Smart Flashcards")
+st.markdown("Generate flashcards from your notes to help you memorize key concepts.")
 
 # --- 2. GENERATE BUTTON ---
 if st.button("🚀 Generate Flashcards"):
@@ -28,7 +39,7 @@ if st.button("🚀 Generate Flashcards"):
             safe_text = st.session_state.pdf_text[:15000]
             
             prompt = f"""
-            Extract 5 key terms and definitions from this text:
+            Extract 10 key terms and definitions from this text:
             {safe_text}
             
             Return a JSON Array ONLY. Format:
@@ -48,10 +59,26 @@ if st.button("🚀 Generate Flashcards"):
             clean_json = raw_json.replace("```json", "").replace("```", "").strip()
             data = json.loads(clean_json)
             
-            # Display as a nice Table
-            st.write("### 📝 Key Terms")
-            df = pd.DataFrame(data)
-            st.table(df)
+            # Save to session state to persist
+            st.session_state.flashcards = data
             
         except Exception as e:
             st.error(f"Error: {e}")
+
+# --- 3. DISPLAY FLASHCARDS ---
+if "flashcards" in st.session_state:
+    st.write("### 📝 Your Flashcards")
+    
+    # Grid Layout
+    cols = st.columns(2)
+    
+    for i, card in enumerate(st.session_state.flashcards):
+        # coloring alternating cards slightly differently or just using the card style
+        with cols[i % 2]:
+            with st.container():
+                st.markdown(f"""
+                <div class="custom-card">
+                    <h3 style="color: #4f46e5;">{card['term']}</h3>
+                    <p>{card['def']}</p>
+                </div>
+                """, unsafe_allow_html=True)

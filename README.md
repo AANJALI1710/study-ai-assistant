@@ -1,36 +1,37 @@
-# 🎓 Study AI Assistant
+# Study AI Assistant 🎓
 
-**Transform your boring PDF notes into an interactive study engine.**
+An AI-powered application to help students study smarter. Upload your PDF notes and get instant access to a chatbot, flashcards, and quizzes.
 
-Study AI Assistant is a Streamlit-based web application that uses **Llama-3 (via Groq)** to turn static PDF documents into active learning tools. Upload your course notes, and instantly get a chatbot, quizzes, and flashcards generated from your content.
+## Features
 
-🔗 **Live Demo:** [Click here to view the App](https://study-ai-assistant.streamlit.app/) *(Replace with your actual link)*
+- **🤖 Chatbot**: Ask questions about your notes and get processed answers using Llama-3.
+- **⚡ Flashcards**: Automatically generate flashcards from your study materials to aid memorization.
+- **❓ Quiz Master**: Test your knowledge with AI-generated quizzes (Multiple Choice or True/False).
+- **🎨 Modern UI**: Features a clean interface with Light and Dark variants.
 
----
+## Tech Stack
 
-## 🚀 Features
+- **Streamlit**: For the interactive web application.
+- **Groq API (Llama-3)**: For fast and accurate AI responses.
+- **PyPDF2**: For PDF text extraction.
 
-### 1. 🤖 AI Chatbot (RAG)
-* Ask questions directly to your PDF.
-* The AI reads your document and answers based **only** on the context provided.
-* No hallucinations—strict adherence to your source material.
+## Setup
 
-### 2. ❓ Quiz Master
-* Generate **Multiple Choice** or **True/False** questions instantly.
-* Customizable difficulty (Easy, Medium, Hard).
-* Get immediate feedback and explanations for every answer.
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Set up your secrets:
+   - Create a `.streamlit/secrets.toml` file.
+   - Add your Groq API key: `GROQ_API_KEY = "your_key_here"`
+4. Run the app:
+   ```bash
+   streamlit run Home.py
+   ```
 
-### 3. ⚡ Smart Flashcards
-* Automatically extracts key terms and definitions from your notes.
-* Perfect for last-minute revision and memorization.
+## Usage
 
----
-
-## 🛠️ Tech Stack
-
-* **Frontend:** [Streamlit](https://streamlit.io/) (Python)
-* **LLM Engine:** [Llama-3.3-70b-versatile](https://groq.com/) (via Groq API)
-* **PDF Processing:** PyPDF2
-* **Deployment:** Streamlit Community Cloud
-
----
+1. **Upload**: Drag and drop your PDF notes on the Home page.
+2. **Select Tool**: Choose from Chatbot, Flashcards, or Quiz Master from the sidebar or the home page links.
+3. **Study**: Interact with the AI to master your subject!
