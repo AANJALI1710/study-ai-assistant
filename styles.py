@@ -76,26 +76,25 @@ def apply_custom_styles(theme="Light"):
 
             p, li, label, .stMarkdown {{
                 color: {colors["text_color"]};
+                line-height: 1.6;
             }}
 
             /* Headings */
             h1, h2, h3, h4, h5, h6 {{
                 color: {colors["text_color"]} !important;
                 font-weight: 700;
+                letter-spacing: -0.02em;
             }}
             
             h1 {{
-                background: -webkit-linear-gradient(45deg, #4f46e5, #06b6d4);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                padding-bottom: 0.2rem;
+                font-size: 2.5rem !important;
+                margin-bottom: 1.5rem !important;
             }}
 
             /* Sidebar */
             section[data-testid="stSidebar"] {{
                 background-color: {colors["sidebar_bg"]};
                 border-right: 1px solid {colors["card_border"]};
-                box-shadow: 2px 0 5px rgba(0,0,0,0.02);
             }}
             
             section[data-testid="stSidebar"] h1, 
@@ -108,81 +107,66 @@ def apply_custom_styles(theme="Light"):
 
             /* Buttons */
             .stButton > button {{
-                background: linear-gradient(90deg, #4f46e5 0%, #6366f1 100%);
+                background: #4f46e5;
                 color: white !important;
                 border: none;
-                border-radius: 8px;
-                padding: 0.6rem 1.2rem;
-                font-weight: 600;
-                transition: all 0.3s ease;
-                box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2), 0 2px 4px -1px rgba(79, 70, 229, 0.1);
+                border-radius: 6px;
+                padding: 0.5rem 1rem;
+                font-weight: 500;
+                transition: background 0.2s ease;
+                width: auto;
             }}
 
             .stButton > button:hover {{
-                transform: translateY(-2px);
-                box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3), 0 4px 6px -2px rgba(79, 70, 229, 0.15);
+                background: #4338ca;
                 color: white !important;
+                border: none;
             }}
 
             /* Inputs */
             .stTextInput > div > div > input, .stSelectbox > div > div {{
-                border-radius: 8px;
+                border-radius: 6px;
                 border: 1px solid {colors["input_border"]};
                 background-color: {colors["input_bg"]};
                 color: {colors["text_color"]};
             }}
 
             /* Cards / Containers */
-            /* Custom Card Style Class (to be used with st.markdown specific divs) */
             .custom-card {{
                 background-color: {colors["card_bg"]};
-                padding: 1.5rem;
-                border-radius: 12px;
+                padding: 1.25rem;
+                border-radius: 8px;
                 box-shadow: {colors["shadow"]};
                 margin-bottom: 1rem;
                 border: 1px solid {colors["card_border"]};
             }}
             
-            .custom-card h3, .custom-card h4 {{
-                color: {colors["text_color"]} !important;
-            }}
-            
-            .custom-card p {{
-                color: {colors["text_color"]};
-            }}
-
             /* File Uploader */
             [data-testid="stFileUploader"] {{
-                padding: 2rem;
-                border: 2px dashed {colors["uploader_border"]};
-                border-radius: 12px;
+                padding: 1.5rem;
+                border: 1px solid {colors["uploader_border"]};
+                border-radius: 8px;
                 background-color: {colors["uploader_bg"]};
-                text-align: center;
-                transition: border-color 0.3s ease;
             }}
-             [data-testid="stFileUploader"]:hover {{
-                border-color: #4f46e5;
-             }}
-             [data-testid="stFileUploader"] section {{
-                color: {colors["text_color"]};
-             }}
              
             /* Quiz Feedback */
             .success-box {{
-                padding: 1rem;
+                padding: 0.75rem;
                 background-color: {colors["success_bg"]};
-                border: 1px solid {colors["success_border"]};
+                border-left: 4px solid {colors["success_border"]};
                 color: {colors["success_text"]};
-                border-radius: 8px;
+                border-radius: 4px;
                 margin-top: 0.5rem;
+                font-weight: 500;
             }}
             .error-box {{
-                padding: 1rem;
+                padding: 0.75rem;
                 background-color: {colors["error_bg"]};
-                border: 1px solid {colors["error_border"]};
+                border-left: 4px solid {colors["error_border"]};
                 color: {colors["error_text"]};
-                border-radius: 8px;
+                border-radius: 4px;
                 margin-top: 0.5rem;
+                font-weight: 500;
             }}
             
         </style>

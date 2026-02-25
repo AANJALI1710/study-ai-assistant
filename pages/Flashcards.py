@@ -4,7 +4,7 @@ import json
 import pandas as pd
 import os
 
-st.set_page_config(page_title="Flashcards", page_icon="⚡", layout="wide")
+st.set_page_config(page_title="Flashcards", page_icon=None, layout="wide")
 
 import styles
 import sys
@@ -28,11 +28,11 @@ if "pdf_text" not in st.session_state:
     st.warning("🚨 Upload notes first!")
     st.stop()
 
-st.title("⚡ Smart Flashcards")
+st.title("Smart Flashcards")
 st.markdown("Generate flashcards from your notes to help you memorize key concepts.")
 
 # --- 2. GENERATE BUTTON ---
-if st.button("🚀 Generate Flashcards"):
+if st.button("Generate Flashcards"):
     with st.spinner("Analyzing text..."):
         try:
             # SAFETY LIMIT
@@ -66,8 +66,8 @@ if st.button("🚀 Generate Flashcards"):
             st.error(f"Error: {e}")
 
 # --- 3. DISPLAY FLASHCARDS ---
-if "flashcards" in st.session_state:
-    st.write("### 📝 Your Flashcards")
+    st.divider()
+    st.subheader("Your Flashcards")
     
     # Grid Layout
     cols = st.columns(2)
@@ -78,7 +78,7 @@ if "flashcards" in st.session_state:
             with st.container():
                 st.markdown(f"""
                 <div class="custom-card">
-                    <h3 style="color: #4f46e5;">{card['term']}</h3>
-                    <p>{card['def']}</p>
+                    <h4 style="margin:0; font-weight: 600;">{card['term']}</h4>
+                    <p style="margin-top: 0.5rem; color: #64748b;">{card['def']}</p>
                 </div>
                 """, unsafe_allow_html=True)

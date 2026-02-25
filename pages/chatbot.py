@@ -2,7 +2,7 @@ import streamlit as st
 from groq import Groq
 import os
 
-st.set_page_config(page_title="ChatBot", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="ChatBot", page_icon=None, layout="wide")
 
 import styles
 import sys
@@ -26,7 +26,7 @@ if "pdf_text" not in st.session_state:
     st.warning("🚨 No notes found! Please upload a PDF on the Home page first.")
     st.stop()
 
-st.title("🤖 Chat with Your Notes")
+st.title("Chat with Your Notes")
 st.markdown("Ask questions and get instant answers based on your uploaded document.")
 
 # --- 2. CHAT HISTORY ---
@@ -34,17 +34,17 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 for msg in st.session_state.messages:
-    avatar = "👤" if msg["role"] == "user" else "🤖"
+    avatar = None
     with st.chat_message(msg["role"], avatar=avatar):
         st.markdown(msg["content"])
 
 # --- 3. HANDLE USER INPUT ---
 if prompt := st.chat_input("Ask a question about your notes..."):
-    with st.chat_message("user", avatar="👤"):
+    with st.chat_message("user", avatar=None):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    with st.chat_message("assistant", avatar="🤖"):
+    with st.chat_message("assistant", avatar=None):
         with st.spinner("Thinking..."):
             try:
                 # SAFETY: Limit context to avoid crashing Groq (approx 15k chars)

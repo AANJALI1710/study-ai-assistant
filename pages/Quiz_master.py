@@ -3,7 +3,7 @@ from groq import Groq
 import os
 import json
 
-st.set_page_config(page_title="Quiz Master", page_icon="❓", layout="wide")
+st.set_page_config(page_title="Quiz Master", page_icon=None, layout="wide")
 
 import styles
 import sys
@@ -27,11 +27,11 @@ if "pdf_text" not in st.session_state:
     st.warning("🚨 No notes found! Please upload a PDF on the Home page first.")
     st.stop()
 
-st.title("❓ Quiz Master")
-st.markdown("### *Customize your practice session.*")
+st.title("Quiz Master")
+st.markdown("### Customize your practice session.")
 
 # --- 2. QUIZ SETTINGS ---
-with st.expander("⚙️ Quiz Settings", expanded=True):
+with st.expander("Quiz Settings", expanded=True):
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -44,8 +44,8 @@ with st.expander("⚙️ Quiz Settings", expanded=True):
         quiz_type = st.selectbox("Question Type", ["Multiple Choice", "True/False"])
 
 # --- 3. GENERATE QUIZ ---
-if st.button("🚀 Generate Quiz", use_container_width=True):
-    with st.spinner("🧠 Analyzing notes and crafting questions..."):
+if st.button("Generate Quiz", use_container_width=True):
+    with st.spinner("Analyzing notes and crafting questions..."):
         try:
             # SAFETY TRUNCATION
             safe_text = st.session_state.pdf_text[:15000] 
@@ -96,8 +96,8 @@ if "quiz_generated" in st.session_state:
     for i, q in enumerate(st.session_state.quiz_data):
         st.markdown(f"""
         <div class="custom-card">
-            <h4 style="color: #4f46e5;">Question {i+1}</h4>
-            <p style="font-size: 1.1rem; font-weight: 500;">{q['q']}</p>
+            <h4 style="font-weight: 600;">Question {i+1}</h4>
+            <p style="font-size: 1.1rem;">{q['q']}</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -107,15 +107,15 @@ if "quiz_generated" in st.session_state:
         if choice:
             # Flexible checking: "Option A" OR just "True" matches
             if choice == q['answer'] or choice.startswith(q['answer']):
-                st.markdown('<div class="success-box">✅ <b>Correct!</b></div>', unsafe_allow_html=True)
+                st.markdown('<div class="success-box">Correct</div>', unsafe_allow_html=True)
                 score += 1
             else:
-                st.markdown(f'<div class="error-box">❌ <b>Incorrect.</b><br>Answer: {q["answer"]}</div>', unsafe_allow_html=True)
-                with st.expander("💡 View Explanation"):
+                st.markdown(f'<div class="error-box">Incorrect. Answer: {q["answer"]}</div>', unsafe_allow_html=True)
+                with st.expander("Explanation"):
                     st.info(q['explanation'])
         st.divider()
 
-    if st.button("🏁 Check Final Score"):
+    if st.button("Check Final Score"):
         if score == total:
             st.success(f"🎉 Perfect Score! {score}/{total}")
         else:

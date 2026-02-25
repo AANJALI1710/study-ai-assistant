@@ -1,43 +1,38 @@
 import streamlit as st
 import PyPDF2
 
-st.set_page_config(page_title="Study AI", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="Study AI", page_icon=None, layout="wide")
 
 import styles
 current_theme = styles.display_theme_toggle()
 styles.apply_custom_styles(current_theme)
 
 # --- HERO SECTION ---
-col1, col2 = st.columns([2, 1])
+col1, col2 = st.columns([3, 1])
 
 with col1:
-    st.title("🎓 AI Study Assistant")
+    st.title("Study AI Assistant")
     st.markdown("""
         <div style="padding-bottom: 2rem;">
-            <h3>Unlock your potential with smart study tools.</h3>
-            <p style="color: #64748b; font-size: 1.1rem;">
-                Upload your study materials (PDF) and instantly access an AI-powered Chatbot, 
+            <h3 style="font-weight: 400; color: #64748b;">Unlock your potential with smart study tools.</h3>
+            <p style="font-size: 1.1rem;">
+                Upload your study materials and instantly access an AI-powered Chatbot, 
                 Flashcards generator, and Quiz Master to master your subjects.
             </p>
         </div>
     """, unsafe_allow_html=True)
 
-with col2:
-    # You could add an illustration here if you had one, for now, we'll keep it simple or add a placeholder
-    st.markdown('<div style="text-align: center; font-size: 5rem;">📚</div>', unsafe_allow_html=True)
-
-
 # --- 1. FILE UPLOADER SECTION ---
-st.markdown("---")
-st.markdown("### 1. Upload Your Notes")
+st.divider()
+st.subheader("1. Upload Your Notes")
 
 # Centering the uploader slightly or making it prominent
 with st.container():
-    uploaded_file = st.file_uploader("Drop your PDF here to get started", type=["pdf"])
+    uploaded_file = st.file_uploader("Upload your PDF document to get started", type=["pdf"], label_visibility="collapsed")
 
 if uploaded_file is not None:
     # --- 2. EXTRACT TEXT ---
-    with st.spinner("Processing PDF..."):
+    with st.spinner("Processing document..."):
         try:
             pdf_reader = PyPDF2.PdfReader(uploaded_file)
             text = ""
@@ -48,19 +43,20 @@ if uploaded_file is not None:
             st.session_state.pdf_text = text
             
             # --- 3. SUCCESS UI ---
-            st.success(f"✅ PDF Processed Successfully! Loaded {len(pdf_reader.pages)} pages.")
+            st.success(f"Document processed. {len(pdf_reader.pages)} pages loaded.")
             
             # Action Cards
-            st.markdown("### 2. Choose Your Tool")
+            st.divider()
+            st.subheader("2. Choose Your Tool")
             c1, c2, c3 = st.columns(3)
             with c1:
-                st.page_link("pages/chatbot.py", label="Chatbot", icon="🤖", use_container_width=True)
+                st.page_link("pages/chatbot.py", label="Study Chatbot", use_container_width=True)
                 st.caption("Ask questions about your notes.")
             with c2:
-                st.page_link("pages/Flashcards.py", label="Flashcards", icon="⚡", use_container_width=True)
-                st.caption("Generate cards for memorization.")
+                st.page_link("pages/Flashcards.py", label="Generate Flashcards", use_container_width=True)
+                st.caption("Create cards for memorization.")
             with c3:
-                st.page_link("pages/Quiz_master.py", label="Quiz Master", icon="❓", use_container_width=True)
+                st.page_link("pages/Quiz_master.py", label="Quiz Master", use_container_width=True)
                 st.caption("Test your knowledge.")
             
         except Exception as e:
@@ -68,15 +64,15 @@ if uploaded_file is not None:
 
 # --- 4. SIDEBAR INFO ---
 with st.sidebar:
-    st.header("Study AI Info")
-    st.markdown("---")
-    st.markdown("**Model:** Llama-3 (via Groq)")
+    st.title("Study AI")
+    st.divider()
+    st.markdown("**Model:** Llama-3 (Groq)")
     
     st.markdown("### Status")
     if "pdf_text" in st.session_state:
-        st.success("📂 PDF Loaded & Ready")
+        st.info("Document Loaded")
     else:
-        st.warning("📂 No PDF Loaded")
+        st.write("No document uploaded")
         
-    st.markdown("---")
-    st.markdown("Made with ❤️ by Study AI Team")
+    st.divider()
+    st.caption("Study AI Assistant")
